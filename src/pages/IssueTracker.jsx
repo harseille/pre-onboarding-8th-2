@@ -1,16 +1,16 @@
 import { useRecoilValue } from 'recoil';
 import styled from '@emotion/styled';
-import { processState } from '../store/process';
+import { processListState } from '../store/process';
 import { autoMargin, flexbox } from '../styles/mixin';
 import IssueProcess from '../components/IssueProcess/Container';
 
 const IssueTracker = () => {
-  const processListState = useRecoilValue(processState);
+  const processList = useRecoilValue(processListState);
 
   return (
     <Container>
       <Wrapper>
-        {processListState.map((process) => (
+        {processList.map((process) => (
           <IssueProcess key={process.id} process={process} />
         ))}
       </Wrapper>
