@@ -1,14 +1,20 @@
 import { useState, useRef } from 'react';
-import { useSetRecoilState } from 'recoil';
+import { useSetRecoilState, useRecoilState } from 'recoil';
 import styled from '@emotion/styled';
+import { v4 as uuidv4 } from 'uuid';
 import { buttonNone } from '../../styles/mixin';
 import IssueCard from '../IssueCard/Card';
 import CardAddGroup from './CardAddGroup';
-import { CARD_FORM_MODE, CARD_VIEW_MODE } from '../../constants/common';
+import {
+  CARD_FORM_MODE,
+  CARD_VIEW_MODE,
+  TARGET_ISSUE_MODE_ADD,
+} from '../../constants/common';
+import { issueState } from '../../store/issue';
 
 const Container = (props) => {
   const {
-    process: { title, issueCardList },
+    process: { id, title, issueCardList },
   } = props;
 
   // const setIssuState = useSetRecoilState(issueState);
@@ -22,16 +28,36 @@ const Container = (props) => {
     );
   };
 
-  // const clickAddIssueHandler = () => {
-  //   setCardMode(CARD_VIEW_MODE);
-  // };
+  // Todo: useIssue Hooks 만들기
+  // 이슈 추가를 하면 issueList에 추가 되고 processList를 업데이트 한다.
+  const setIssuState = useSetRecoilState(issueState);
+
+  // const [targetIssue, setTargetIssue] = useRecoilState(targetIssueState);
+
+  const clickAddIssueButtonHandler = () => {
+    if (cardAddInputRef.current.value.trim() === '') return;
+
+    setIssuState({
+      mode: TARGET_ISSUE_MODE_ADD,
+      id: uuidv4(),
+      status: id,
+      title: cardAddInputRef.current.value,
+    });
+
+    setCardMode((prevMode) =>
+      prevMode === CARD_VIEW_MODE ? CARD_FORM_MODE : CARD_VIEW_MODE,
+    );
+    // cardAddInputRef.current.value = '';
+  };
 
   return (
     <IssueProcess>
       <IssueProcessTitle>{title}</IssueProcessTitle>
       <IssueCardList>
         {issueCardList.length > 0
-          ? issueCardList.map((issue) => <IssueCard key={issue.id} />)
+          ? issueCardList.map((issue) => (
+              <IssueCard key={issue.id} title={issue.title} />
+            ))
           : null}
         <ButtonGroupWrapper>
           {cardMode === CARD_VIEW_MODE ? (
@@ -41,7 +67,9 @@ const Container = (props) => {
           ) : (
             <CardAddGroup
               ref={cardAddInputRef}
-              clickCancelHander={clickChangeCardModeHandler}
+              addButtonHandler={clickAddIssueButtonHandler}
+              cancelButtonHandler={clickChangeCardModeHandler}
+              processId={id}
             />
           )}
         </ButtonGroupWrapper>

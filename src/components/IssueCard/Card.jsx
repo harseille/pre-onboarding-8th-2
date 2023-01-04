@@ -1,10 +1,12 @@
 import styled from '@emotion/styled';
 import { buttonNone } from '../../styles/mixin';
 
-const IssueCard = () => {
+const IssueCard = (props) => {
+  const { title } = props;
+
   return (
     <Card>
-      <Title>이슈</Title>
+      <Title>{title}</Title>
       <DeleteCardButton>🗑️</DeleteCardButton>
     </Card>
   );

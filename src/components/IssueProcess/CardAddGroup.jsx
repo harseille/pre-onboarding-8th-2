@@ -1,11 +1,10 @@
 import { forwardRef, useEffect } from 'react';
-import { useSetRecoilState } from 'recoil';
 import styled from '@emotion/styled';
 import Input from '../common/Input';
 import Button from '../common/Button';
 
 const CardAddGroup = forwardRef((props, cardAddInputRef) => {
-  const { clickCancelHander } = props;
+  const { addButtonHandler, cancelButtonHandler } = props;
 
   useEffect(() => {
     cardAddInputRef.current.focus();
@@ -17,8 +16,8 @@ const CardAddGroup = forwardRef((props, cardAddInputRef) => {
         placeholder="할 일 제목을 입력해주세요."
         ref={cardAddInputRef}
       />
-      <AddButton>추가</AddButton>
-      <CancelButton onClick={clickCancelHander}>취소</CancelButton>
+      <AddButton onClick={addButtonHandler}>추가</AddButton>
+      <CancelButton onClick={cancelButtonHandler}>취소</CancelButton>
     </>
   );
 });
