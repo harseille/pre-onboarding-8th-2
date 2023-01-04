@@ -1,13 +1,31 @@
+import { useSetRecoilState } from 'recoil';
 import styled from '@emotion/styled';
 import { buttonNone } from '../../styles/mixin';
+import { TARGET_ISSUE_MODE_DELETE } from '../../constants/common';
+import { issueState } from '../../store/issue';
 
 const IssueCard = (props) => {
-  const { title } = props;
+  const {
+    issue: { title, id },
+    processId,
+  } = props;
+
+  const setIssuState = useSetRecoilState(issueState);
+
+  const clickDeleteIssueButtonHandler = () => {
+    setIssuState({
+      mode: TARGET_ISSUE_MODE_DELETE,
+      id,
+      status: processId,
+    });
+  };
 
   return (
     <Card>
       <Title>{title}</Title>
-      <DeleteCardButton>🗑️</DeleteCardButton>
+      <DeleteCardButton onClick={clickDeleteIssueButtonHandler}>
+        🗑️
+      </DeleteCardButton>
     </Card>
   );
 };

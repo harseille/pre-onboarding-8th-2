@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { useSetRecoilState, useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import styled from '@emotion/styled';
 import { v4 as uuidv4 } from 'uuid';
 import { buttonNone } from '../../styles/mixin';
@@ -29,10 +29,7 @@ const Container = (props) => {
   };
 
   // Todo: useIssue Hooks 만들기
-  // 이슈 추가를 하면 issueList에 추가 되고 processList를 업데이트 한다.
   const setIssuState = useSetRecoilState(issueState);
-
-  // const [targetIssue, setTargetIssue] = useRecoilState(targetIssueState);
 
   const clickAddIssueButtonHandler = () => {
     if (cardAddInputRef.current.value.trim() === '') return;
@@ -47,7 +44,6 @@ const Container = (props) => {
     setCardMode((prevMode) =>
       prevMode === CARD_VIEW_MODE ? CARD_FORM_MODE : CARD_VIEW_MODE,
     );
-    // cardAddInputRef.current.value = '';
   };
 
   return (
@@ -56,7 +52,7 @@ const Container = (props) => {
       <IssueCardList>
         {issueCardList.length > 0
           ? issueCardList.map((issue) => (
-              <IssueCard key={issue.id} title={issue.title} />
+              <IssueCard key={issue.id} issue={issue} processId={id} />
             ))
           : null}
         <ButtonGroupWrapper>
@@ -69,7 +65,6 @@ const Container = (props) => {
               ref={cardAddInputRef}
               addButtonHandler={clickAddIssueButtonHandler}
               cancelButtonHandler={clickChangeCardModeHandler}
-              processId={id}
             />
           )}
         </ButtonGroupWrapper>

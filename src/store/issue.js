@@ -90,12 +90,20 @@ const issueState = selector({
             }
           : process,
       );
-
-      console.log(newIssueList);
-      console.log(newProcessList);
     }
     if (targetIssue.mode === TARGET_ISSUE_MODE_DELETE) {
       newIssueList = issueList.filter((issue) => issue.id !== targetIssue.id);
+
+      newProcessList = processList.map((process) =>
+        process.id === targetProcess.id
+          ? {
+              ...process,
+              issueCardList: process.issueCardList.filter(
+                (issueCard) => issueCard.id !== targetIssue.id,
+              ),
+            }
+          : process,
+      );
     }
     if (targetIssue.mode === TARGET_ISSUE_MODE_UPDATE) {
       newIssueList = issueList.map((issue) =>
