@@ -2,12 +2,18 @@ import styled from '@emotion/styled';
 import { buttonNone } from '../../styles/mixin';
 import IssueCard from '../IssueCard/Card';
 
-const Container = () => {
+const Container = (props) => {
+  const {
+    process: { title, issues },
+  } = props;
+
   return (
     <IssueProcess>
-      <IssueProcessTitle>Todo</IssueProcessTitle>
+      <IssueProcessTitle>{title}</IssueProcessTitle>
       <IssueCardList>
-        <IssueCard />
+        {issues.length > 0
+          ? issues.map((issue, index) => <IssueCard key={issue[index]} />)
+          : null}
         <AddCardButton>+ 이슈 추가</AddCardButton>
       </IssueCardList>
     </IssueProcess>
