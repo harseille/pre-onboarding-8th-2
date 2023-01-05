@@ -1,15 +1,22 @@
 import { atom, selector } from 'recoil';
+import { recoilPersist } from 'recoil-persist';
 import { targetIssueState } from './common';
-import { processListState, processState } from './process';
+import { processListState } from './process';
 import {
   TARGET_ISSUE_MODE_ADD,
   TARGET_ISSUE_MODE_UPDATE,
   TARGET_ISSUE_MODE_DELETE,
 } from '../constants/common';
 
+const { persistAtom } = recoilPersist({
+  key: 'persistIssueList',
+  storage: localStorage,
+});
+
 const issueListState = atom({
   key: 'issueList',
   default: [],
+  effects_UNSTABLE: [persistAtom],
 });
 
 // const issueCardState = selector({
@@ -122,12 +129,3 @@ const issueState = selector({
 
 // export { issueListState, targetIssueState, issueCardState, issueState };
 export { issueListState, issueState };
-
-// const issue = {
-//   id: 0,
-//   title: '',
-//   content: '',
-//   dueDate: '',
-//   status: '',
-//   person: '',
-// };

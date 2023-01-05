@@ -1,10 +1,17 @@
 import { atom, selector } from 'recoil';
+import { recoilPersist } from 'recoil-persist';
 import { targetIssueState } from './common';
 import { PROCESS_LIST } from '../constants/process';
+
+const { persistAtom } = recoilPersist({
+  key: 'persistprocesList',
+  storage: localStorage,
+});
 
 const processListState = atom({
   key: 'procesList',
   default: PROCESS_LIST,
+  effects_UNSTABLE: [persistAtom],
 });
 
 const processState = selector({
