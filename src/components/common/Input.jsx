@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 const Input = styled.input`
   width: 100%;
@@ -12,5 +12,4 @@ const Input = styled.input`
     color: ${({ theme }) => theme.trelloListTitle};
   }
 `;
-
 export default Input;

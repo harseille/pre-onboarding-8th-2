@@ -4,6 +4,7 @@ const theme = {
     primaryYellow: '#FBC200',
     primaryBlue: '#01A4E3',
     primaryOrange: '#FF8300',
+    subOrange: '#EE7200',
     primaryPurple: '#4D006A',
     gray59: '#595959',
     gray87: '#878787',
@@ -13,7 +14,6 @@ const theme = {
     black6b: '#6b6b6b',
     black25: '#252525',
     white: '#fff',
-    AccessibilityGreen: '#09622D',
   },
   boxShadow: {
     bold: '0 10px 20px rgba(80, 80, 80, 0.6)',

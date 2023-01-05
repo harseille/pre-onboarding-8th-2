@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import styled from '@emotion/styled';
 import Header from './Header';
 import IssueTracker from '../pages/IssueTracker';
@@ -6,7 +7,9 @@ const RootLayout = () => {
   return (
     <Layout>
       <Header />
-      <IssueTracker />
+      <Suspense fallback={<div>Loading</div>}>
+        <IssueTracker />
+      </Suspense>
     </Layout>
   );
 };

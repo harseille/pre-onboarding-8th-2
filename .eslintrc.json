@@ -37,8 +37,8 @@
       2,
       { "namedComponents": "arrow-function" }
     ],
+    "react/prop-types": [0],
     "require-await": "error",
-    "arrow-parens": ["error", "as-needed"],
     "no-param-reassign": ["error", { "props": false }],
     "no-unused-expressions": [
       "error",
