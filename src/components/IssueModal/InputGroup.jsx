@@ -1,23 +1,22 @@
+import { forwardRef, useEffect } from 'react';
 import styled from '@emotion/styled';
 import Input from '../common/Input';
 import { flexbox } from '../../styles/mixin';
-import { ISSUE_STATUS } from '../../constants/issue';
 
-const InputGroup = (props) => {
-  const { id, type, labelValue, isReadonly, value } = props;
+const InputGroup = forwardRef((props, ref) => {
+  const { id, type, labelValue, value } = props;
+
+  useEffect(() => {
+    ref.current.value = value || '';
+  }, []);
 
   return (
     <Wrapper>
       <ModalLabel htmlFor={id}>{labelValue}</ModalLabel>
-      <ModalInput
-        type={type}
-        id={id}
-        readonly={isReadonly}
-        value={value ? (type === 'status' ? ISSUE_STATUS[value] : value) : ''}
-      />
+      <ModalInput type={type} id={id} ref={ref} />
     </Wrapper>
   );
-};
+});
 
 export default InputGroup;
 

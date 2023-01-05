@@ -1,26 +1,32 @@
 import { createPortal } from 'react-dom';
 import styled from '@emotion/styled';
 
+const DimmedLayer = (props) => {
+  const { onClose } = props;
+  return <DimmedLayerWapper onClick={onClose} />;
+};
+
 const ModalLayout = ({ modal }) => {
-  return (
-    <DimmedLayer onClick={modal.onClose}>
-      <ModalBody width={modal.width}>{modal.children}</ModalBody>
-    </DimmedLayer>
-  );
+  return <ModalBody width={modal.width}>{modal.children}</ModalBody>;
 };
 
 const Modal = (props) => {
+  const { onClose } = props;
   return (
     <>
       {createPortal(
+        <DimmedLayer onClose={onClose} />,
+        document.getElementById('dimmedLayer_root'),
+      )}
+      {createPortal(
         <ModalLayout modal={props} />,
-        document.querySelector('#modal_root'),
+        document.getElementById('modal_root'),
       )}
     </>
   );
 };
 
-const DimmedLayer = styled.div`
+const DimmedLayerWapper = styled.div`
   position: fixed;
   left: 0;
   top: 0;
@@ -38,6 +44,7 @@ const ModalBody = styled.div`
   border-radius: 1rem;
   padding: 4rem;
   background: ${({ theme }) => theme.colors.white};
+  z-index: 1;
 `;
 
 export default Modal;
