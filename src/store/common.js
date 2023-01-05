@@ -7,4 +7,14 @@ const targetIssueState = atom({
   },
 });
 
-export { targetIssueState };
+const isShowModalState = atom({
+  key: 'isShowModal',
+  default: false,
+});
+
+const targetIssueCardIdState = atom({
+  key: 'targetIssueCardId',
+  default: null,
+});
+
+export { targetIssueState, isShowModalState, targetIssueCardIdState };

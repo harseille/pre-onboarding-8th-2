@@ -14,7 +14,7 @@ const Modal = (props) => {
     <>
       {createPortal(
         <ModalLayout modal={props} />,
-        document.querySelector('#modal__root'),
+        document.querySelector('#modal_root'),
       )}
     </>
   );
@@ -33,11 +33,11 @@ const ModalBody = styled.div`
   position: absolute;
   left: 50%;
   top: 50%;
-  width: ${({ width }) => width + 'px'};
-  padding: 20px;
-  border-radius: 8px;
+  width: ${({ width }) => width + 'rem'};
   transform: translate3d(-50%, -50%, 0);
-  background: ${({ theme }) => theme.trelloListBg};
+  border-radius: 1rem;
+  padding: 4rem;
+  background: ${({ theme }) => theme.colors.white};
 `;
 
 export default Modal;

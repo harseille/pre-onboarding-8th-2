@@ -1,6 +1,6 @@
 import { atom, selector } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
-import { targetIssueState } from './common';
+import { targetIssueCardIdState } from './common';
 import { processListState } from './process';
 import {
   TARGET_ISSUE_MODE_ADD,
@@ -9,7 +9,7 @@ import {
 } from '../constants/common';
 
 const { persistAtom } = recoilPersist({
-  key: 'persistIssueList',
+  key: 'persist',
   storage: localStorage,
 });
 
@@ -70,10 +70,11 @@ const issueState = selector({
   key: 'issue',
 
   get: ({ get }) => {
-    const issueList = get(issueListState);
-    const targetIssue = get(targetIssueState);
+    // const issueList = get(issueListState);
+    const { issueList } = JSON.parse(localStorage.getItem('persistIssueList'));
+    const targetIssueCardId = get(targetIssueCardIdState);
 
-    return issueList.find((issue) => issue.id === targetIssue.id);
+    return issueList.find((issue) => issue.id === targetIssueCardId);
   },
   set: ({ get, set }, targetIssue) => {
     const processList = get(processListState);
