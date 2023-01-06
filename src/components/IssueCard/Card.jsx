@@ -1,5 +1,6 @@
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import styled from '@emotion/styled';
+import useDnD from '../../hooks/common/useDnD';
 import { buttonNone } from '../../styles/mixin';
 import { TARGET_ISSUE_MODE_DELETE } from '../../constants/common';
 import { issueState } from '../../store/issue';
@@ -12,12 +13,13 @@ const IssueCard = (props) => {
     processId,
   } = props;
 
+  const { dragStartHandler, dragOverHandler } = useDnD();
+
   const setIssuState = useSetRecoilState(issueState);
   const [isShowModal, setIsShowModal] = useRecoilState(isShowModalState);
   const [targetIssueCardId, setTargetIssueCardId] = useRecoilState(
     targetIssueCardIdState,
   );
-  // const [targetIssue, setTargetIssue] = useState(issue);
 
   const clickDeleteIssueButtonHandler = () => {
     setIssuState({
@@ -35,7 +37,13 @@ const IssueCard = (props) => {
   return (
     <>
       {isShowModal && targetIssueCardId === id && <IssueModal />}
-      <Card onClick={clickIssueItemHandler}>
+      <Card
+        onClick={clickIssueItemHandler}
+        data-card-id={id}
+        draggable
+        onDragStart={dragStartHandler}
+        onDragOver={dragOverHandler}
+      >
         <Title>{title}</Title>
         <DeleteCardButton onClick={clickDeleteIssueButtonHandler}>
           🗑️
@@ -54,6 +62,11 @@ const Card = styled.li`
   border-radius: 5px;
   background: ${({ theme }) => theme.colors.grayDDD};
   cursor: pointer;
+  border: 0;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.primaryBlue};
+  }
 `;
 
 const Title = styled.span`

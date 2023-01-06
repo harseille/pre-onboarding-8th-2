@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import { useSetRecoilState } from 'recoil';
 import styled from '@emotion/styled';
 import { v4 as uuidv4 } from 'uuid';
+import useDnD from '../../hooks/common/useDnD';
 import { buttonNone } from '../../styles/mixin';
 import IssueCard from '../IssueCard/Card';
 import CardAddGroup from './CardAddGroup';
@@ -21,6 +22,8 @@ const Container = (props) => {
   const [cardMode, setCardMode] = useState(CARD_VIEW_MODE);
 
   const cardAddInputRef = useRef();
+
+  const { dragDropHandler, dragOverHandler } = useDnD();
 
   const clickChangeCardModeHandler = () => {
     setCardMode((prevMode) =>
@@ -49,7 +52,11 @@ const Container = (props) => {
   return (
     <IssueProcess>
       <IssueProcessTitle>{title}</IssueProcessTitle>
-      <IssueCardList>
+      <IssueCardList
+        onDrop={dragDropHandler}
+        onDragOver={dragOverHandler}
+        data-process-id={id}
+      >
         {issueCardList.length > 0
           ? issueCardList.map((issue) => (
               <IssueCard key={issue.id} issue={issue} processId={id} />
@@ -92,6 +99,7 @@ const IssueProcessTitle = styled.h2`
 
 const IssueCardList = styled.ul`
   margin-top: 1rem;
+  padding: 1rem;
 `;
 
 const AddCardButton = styled.button`

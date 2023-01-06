@@ -27,7 +27,6 @@ const Container = styled.div`
 
 const Wrapper = styled.div`
   max-width: 120rem;
-  background: ${({ theme }) => theme.colors.primaryBlue};
   height: 100vh;
   padding-top: 10rem;
   ${flexbox('row', 'space-around', 'flex-start')} ${autoMargin()};
